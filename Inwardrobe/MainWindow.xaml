@@ -6,8 +6,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Inwardrobe"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="The entry of the cabinet" Height="263" Width="322" MinWidth="310" MinHeight="263" MaxHeight="263">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75*"/>
+            <ColumnDefinition Width="82*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="textBlock1" Margin="32,58,0,0" TextWrapping="Wrap" Text="Height" Height="13" VerticalAlignment="Top" HorizontalAlignment="Left" Width="32"/>
+        <Label x:Name="label" Content="Door" Margin="10,10,0,0" FontSize="14" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Width="40"/>
+        <TextBox x:Name="Dy" Margin="32,76,32,0" TextWrapping="Wrap" Text="200" Height="26" VerticalAlignment="Top" MinWidth="80" FlowDirection="RightToLeft"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="33,108,0,0" TextWrapping="Wrap" Text="Width" VerticalAlignment="Top" Height="13" Width="28"/>
+        <TextBox x:Name="Dx" Margin="32,126,32,0" TextWrapping="Wrap" Text="120" Height="26" VerticalAlignment="Top" MinWidth="80" FlowDirection="RightToLeft"/>
+        <Label x:Name="label_Copy" Content="Wardrobe" Margin="10,10,0,0" FontSize="14" HorizontalAlignment="Left" Width="73" Height="27" VerticalAlignment="Top" Grid.Column="1"/>
+        <TextBlock x:Name="textBlock1_Copy" Margin="32,58,0,0" TextWrapping="Wrap" Text="Height" Height="13" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Left" Width="32"/>
+        <TextBox x:Name="Wy" Margin="32,76,32,0" TextWrapping="Wrap" Text="190" Height="26" VerticalAlignment="Top" Grid.Column="1" MinWidth="80" FlowDirection="RightToLeft"/>
+        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="33,108,0,0" TextWrapping="Wrap" Text="Width" VerticalAlignment="Top" Height="13" Width="28" Grid.Column="1"/>
+        <TextBox x:Name="Wx" Margin="32,126,32,0" TextWrapping="Wrap" Text="110" Height="26" VerticalAlignment="Top" MinWidth="80" Grid.Column="1" FlowDirection="RightToLeft"/>
+        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="32,157,0,0" TextWrapping="Wrap" Text="Depth" VerticalAlignment="Top" Height="13" Width="32" Grid.Column="1"/>
+        <TextBox x:Name="Wz" Margin="32,175,32,0" TextWrapping="Wrap" Text="300" MinWidth="80" Grid.Column="1" Height="26" VerticalAlignment="Top" FlowDirection="RightToLeft"/>
+        <Button x:Name="Runs" Content="OK" VerticalAlignment="Top" Margin="32,175,32,0" Height="26" Click="Runs_Click"/>
+
     </Grid>
 </Controls:MetroWindow>
