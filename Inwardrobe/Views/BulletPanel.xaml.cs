@@ -12,30 +12,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Inwardrobe.Class;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
-namespace Inwardrobe
+namespace Inwardrobe.Views
 {
     /// <summary>
-    /// Логика взаимодействия для MainView.xaml
+    /// Логика взаимодействия для Bullet.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class BulletPanel : MetroContentControl
     {
-        Builder builder;
-
-        public MainWindow()
+        public BulletPanel()
         {
             InitializeComponent();
-            builder = new Builder();
         }
 
-        private void Run_Click(object sender, RoutedEventArgs e)
+        public double Bradius
         {
-            builder.SetPassageway(Passageway);
-            builder.SetVolumetricBody(VolumetricBoby);
-            builder.GetResult(this);
+            get => Convert.ToDouble(Br.Text);
         }
     }
 }

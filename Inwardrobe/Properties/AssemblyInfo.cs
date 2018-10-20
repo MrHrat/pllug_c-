@@ -9,8 +9,8 @@ using System.Windows;
 // связанные со сборкой.
 [assembly: AssemblyTitle("Inwardrobe")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyConfiguration("Debug")]
+[assembly: AssemblyCompany("Hrat")]
 [assembly: AssemblyProduct("Inwardrobe")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]

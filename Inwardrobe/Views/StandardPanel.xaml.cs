@@ -12,30 +12,34 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Inwardrobe.Class;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
-namespace Inwardrobe
+namespace Inwardrobe.Views
 {
     /// <summary>
-    /// Логика взаимодействия для MainView.xaml
+    /// Логика взаимодействия для StandardPanel.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class StandardPanel : MetroContentControl
     {
-        Builder builder;
-
-        public MainWindow()
+        public StandardPanel()
         {
             InitializeComponent();
-            builder = new Builder();
         }
 
-        private void Run_Click(object sender, RoutedEventArgs e)
+        public double Swidth
         {
-            builder.SetPassageway(Passageway);
-            builder.SetVolumetricBody(VolumetricBoby);
-            builder.GetResult(this);
+            get => Convert.ToDouble(Sw.Text);
+        }
+
+        public double Sheight
+        {
+            get => Convert.ToDouble(Sh.Text);
+        }
+
+        public double Sdepth
+        {
+            get => Convert.ToDouble(Sd.Text);
         }
     }
 }

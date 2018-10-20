@@ -64,18 +64,57 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="Class\Builder.cs" />
+    <Compile Include="Class\FactoryCollection.cs" />
+    <Compile Include="Class\PassGate\BulletThoughTheDoor.cs" />
+    <Compile Include="Class\PassGate\TubThoughTheDoor.cs" />
+    <Compile Include="Class\VolumetricBody\Bullet.cs" />
+    <Compile Include="Class\Passageway\Door.cs" />
+    <Compile Include="Class\Passageway\Passageway.cs" />
+    <Compile Include="Class\PassGate\PassGate.cs" />
+    <Compile Include="Class\VolumetricBody\Tub.cs" />
+    <Compile Include="Class\VolumetricBody\Wardrobe.cs" />
+    <Compile Include="Views\ArchPanel.xaml.cs">
+      <DependentUpon>ArchPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BulletPanel.xaml.cs">
+      <DependentUpon>BulletPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DoorPanel.xaml.cs">
+      <DependentUpon>DoorPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StandardPanel.xaml.cs">
+      <DependentUpon>StandardPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Class\VolumetricBody\VolumetricBody.cs" />
+    <Compile Include="Class\PassGate\WardrobeThroughTheDoor.cs" />
+    <Page Include="Views\ArchPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BulletPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DoorPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StandardPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
