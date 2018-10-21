@@ -33,9 +33,20 @@ namespace Inwardrobe
 
         private void Run_Click(object sender, RoutedEventArgs e)
         {
-            builder.SetPassageway(Passageway);
-            builder.SetVolumetricBody(VolumetricBoby);
-            builder.GetResult(this);
+            try
+            {
+                builder.SetPassageway(Passageway);
+                builder.SetVolumetricBody(VolumetricBoby);
+                builder.GetResult(this);
+            }
+            catch(FormatException ex)
+            {
+                this.ShowMessageAsync("Error!", "Invalid number format");
+            }
+            catch (Exception ex)
+            {
+                this.ShowMessageAsync("Error!", ex.GetType().ToString());
+            }
         }
     }
 }
