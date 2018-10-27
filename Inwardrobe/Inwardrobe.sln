@@ -20,6 +20,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		BuildVersion_UseGlobalSettings = False
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_StartDate = 2018/10/27
 		SolutionGuid = {DEDAEB07-1937-40FD-A39E-D4D16D4C831C}
+		BuildVersion_BuildVersioningStyle = None.None.YearMonthDayStamp.Increment
+		BuildVersion_AssemblyInfoFilename = 
+		BuildVersion_UseUniversalClock = True
 	EndGlobalSection
 EndGlobal

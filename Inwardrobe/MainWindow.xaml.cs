@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,11 @@ namespace Inwardrobe
     {
         Builder builder;
 
+        public string Version
+        {
+            get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,7 +38,7 @@ namespace Inwardrobe
         }
 
         private void Run_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             try
             {
                 builder.SetPassageway(Passageway);
