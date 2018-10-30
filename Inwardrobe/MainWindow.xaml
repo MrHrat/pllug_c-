@@ -1,52 +1,44 @@
-﻿<Controls:MetroWindow x:Name="metroWindow" x:Class="Inwardrobe.MainWindow"
+﻿<Controls:MetroWindow
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:views="clr-namespace:Inwardrobe.Views"             
+                      xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="metroWindow" x:Class="Inwardrobe.MainWindow"             
                       mc:Ignorable="d"             
                       Title="The entry of the cabinet"
                       SizeToContent = "WidthAndHeight"
-                      d:DesignHeight="300" d:DesignWidth="450">
-    <DockPanel LastChildFill="True">
-        <Button x:Name="Run" DockPanel.Dock="Bottom" Style="{StaticResource AccentedSquareButtonStyle}" Content="OK" Click="Run_Click" />
-        <StackPanel Orientation="Horizontal">
-            <TabControl x:Name="Passageway" Margin ="15">
-                <TabItem Header="Door">
-                    <views:DoorPanel x:Name="DoorPanel"/>
-                </TabItem>
-                <TabItem Header="Arch">
-                    <views:ArchPanel />
-                </TabItem>
-            </TabControl>
-            <TabControl x:Name="VolumetricBoby" Margin ="15">
-                <TabItem Header="Wardrobe">
-                    <views:StandardPanel />
-                </TabItem>
-                <TabItem Header="Tub">
-                    <views:ArchPanel />
-                </TabItem>
-                <TabItem Header="Bullet">
-                    <views:BulletPanel />
-                </TabItem>
-            </TabControl>
-        </StackPanel>
-
-    </DockPanel>
+                      d:DesignHeight="300" d:DesignWidth="450" Loaded="metroWindow_Loaded">
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout x:Name="yourMahAppFlyout" Header="{Binding Version, ElementName=metroWindow, Mode=OneWay}" Position="Top">
-            </Controls:Flyout>
+            <Controls:Flyout x:Name="yourMahAppFlyout" Header="{Binding Version, ElementName=metroWindow, Mode=OneWay}" Position="Top"/>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <ToggleButton Content="Vesion" 
-            IsChecked="{Binding ElementName=yourMahAppFlyout, Path=IsOpen}" Cursor="Hand"/>
+            IsChecked="{Binding IsOpen, ElementName=yourMahAppFlyout}" Cursor="Hand"/>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
+
+    <DockPanel LastChildFill="True">
+        <Button x:Name="Run" DockPanel.Dock="Bottom" Style="{StaticResource AccentedSquareButtonStyle}" Content="OK" Click="Run_Click" />
+        <StackPanel Orientation="Horizontal">
+            <ItemsControl Margin ="15">
+                <TextBlock Text="Select the type of gate:" Margin="10 0 10 10"/>
+                <ComboBox x:Name="selectPassageway" Margin="0 0 0 10" SelectionChanged="selectPassageway_SelectionChanged" />
+                <StackPanel x:Name="passageway" />
+            </ItemsControl>
+            <ItemsControl Margin ="15">
+                <TextBlock Text="Select the type of body:" Margin="10 0 10 10"/>
+                <ComboBox x:Name="selectVolumetricBody" Margin="0 0 0 10" SelectionChanged="selectVolumetricBody_SelectionChanged"/>
+                <StackPanel x:Name="volumetricBoby" />
+            </ItemsControl>
+        </StackPanel>
+
+    </DockPanel>
 
 </Controls:MetroWindow>

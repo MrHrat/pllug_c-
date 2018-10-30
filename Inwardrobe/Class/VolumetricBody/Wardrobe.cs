@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inwardrobe.Class
 {
-    public class Wardrobe : VolumetricBody
+    public class Wardrobe : VolumetricBody, IReadParam
     {
         public Wardrobe(double width, double height, double depth)
         {

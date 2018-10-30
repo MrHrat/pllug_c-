@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inwardrobe.Class
 {
-    public class Door : Passageway
+    public class Door : Passageway, IReadParam
     {
         public Door(double widht, double height)
         {

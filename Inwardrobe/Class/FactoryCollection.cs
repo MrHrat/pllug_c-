@@ -8,19 +8,19 @@ namespace Inwardrobe.Class
 {
     public class FactoryCollection
     {
-        public static PassGate GetPassGate(Door door, Wardrobe wardrobe)
+        public static PassGate GetPassGate(Passageway passageway, VolumetricBody body)
         {
-            return new WardrobeThroughTheDoor(door, wardrobe);
-        }
-
-        public static PassGate GetPassGate(Door door, Bullet bullet)
-        {
-            return new BulletThoughTheDoor(door, bullet);
-        }
-
-        public static PassGate GetPassGate(Door door, Tub tub)
-        {
-            return new TubThoughTheDoor(door, tub);
+            switch (body.GetType().ToString())
+            {
+                case "Wardrobe":
+                    return new WardrobeThroughTheDoor(passageway as Door, body as Wardrobe);
+                case "Bullet":
+                    return new BulletThoughTheDoor(passageway as Door, body as Bullet);
+                case "Tub":
+                    return new TubThoughTheDoor(passageway as Door, body as Tub);
+                default:
+                    return new PassGate(passageway, body);
+            }
         }
     }
 }

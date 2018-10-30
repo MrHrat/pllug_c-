@@ -12,29 +12,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 
 namespace Inwardrobe.Views
 {
     /// <summary>
-    /// Логика взаимодействия для ArchPanel.xaml
+    /// Логика взаимодействия для VariablesBlock.xaml
     /// </summary>
-    public partial class ArchPanel : MetroContentControl
+    public partial class VariablesBlock : UserControl
     {
-        public ArchPanel()
+        public string NameValue { set; get; }
+
+        public double Value
         {
+            get { return Convert.ToDouble(Xvalue.Text); }
+            set { Xvalue.Text = value.ToString(); }
+        }
+
+        public VariablesBlock(string name)
+        {
+            NameValue = name;
             InitializeComponent();
-        }
-
-        public double Aradius
-        {
-            get => Convert.ToDouble(Ar.Text);
-        }
-
-        public double Aheight
-        {
-            get => Convert.ToDouble(Ah.Text);
         }
     }
 }

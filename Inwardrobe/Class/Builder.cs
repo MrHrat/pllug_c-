@@ -2,81 +2,88 @@
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Runtime.Serialization;
 
 namespace Inwardrobe.Class
 {
     public class Builder
     {
-        private object passageway;
-        private object volumetricBody;
+        private Passageway passageway;
+        private VolumetricBody volumetricBody;
         private PassGate passGate;
 
         public Builder() { }
 
-        public void SetPassageway(TabControl items)
+        public void SetBodyOrGate(StackPanel stackPanel, ComboBox comboBox)
         {
-            var tab = items.SelectedItem as TabItem;            
-            switch (tab.Header.ToString())
+            Dictionary<string, double> keyValuePairs = new Dictionary<string, double>();
+            foreach (VariablesBlock variablesBlock in stackPanel.Children)
             {
-                case "Door":
-                    var Dp = tab.Content as DoorPanel;
-                    passageway = new Door(Dp.Dwidth, Dp.Dheight);
-                    break;
-                case "Arch":
-                    var Ap = tab.Content as ArchPanel;
-                    passageway = new Door(Ap.Aradius * 2.0, Ap.Aheight);
-                    break;
+                keyValuePairs.Add(variablesBlock.NameValue, variablesBlock.Value);
             }
-        }
 
-        public void SetVolumetricBody(TabControl items)
-        {
-            var tab = items.SelectedItem as TabItem;            
-            switch (tab.Header.ToString())
+            if (FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) is Passageway)
             {
-                case "Wardrobe":
-                    var Ds = tab.Content as StandardPanel;
-                    volumetricBody = new Wardrobe(Ds.Swidth, Ds.Sheight, Ds.Sdepth);
-                    break;
-                case "Tub":
-                    var Ap = tab.Content as ArchPanel;
-                    volumetricBody = new Tub(Ap.Aradius, Ap.Aheight);
-                    break;
-                case "Bullet":
-                    var Bp = tab.Content as BulletPanel;
-                    volumetricBody = new Bullet(Bp.Bradius);
-                    break;
+                passageway = FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) as Passageway;
+                passageway.SetParamValue(keyValuePairs);
+
+                MessageBox.Show(passageway.Width.ToString() + " " + passageway.Height.ToString() + " " + passageway.GetType().Name);
+            }
+            else if (FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) is VolumetricBody)
+            {
+                volumetricBody = FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) as VolumetricBody;
+                volumetricBody.SetParamValue(keyValuePairs);
+
+                MessageBox.Show(volumetricBody.Width.ToString() + " " + volumetricBody.Height.ToString() + " " + volumetricBody.GetType().Name);
             }
         }
 
         public void GetResult(MetroWindow Mbox)
         {
-            var pway = passageway is Door ? passageway as Door : null;
-            if (volumetricBody is Wardrobe)
-            {
-                var vboby = volumetricBody as Wardrobe;
-                passGate = FactoryCollection.GetPassGate(pway, vboby);
-            }
-            else if (volumetricBody is Tub)
-            {
-                var vboby = volumetricBody as Tub;
-                passGate = FactoryCollection.GetPassGate(pway, vboby);
-            }
-            else if (volumetricBody is Bullet)
-            {
-                var vboby = volumetricBody as Bullet;
-                passGate = FactoryCollection.GetPassGate(pway, vboby);
-            }
+            passGate = FactoryCollection.GetPassGate(passageway, volumetricBody);
 
             string ask = passGate.MoveTheGate();
-            Mbox.ShowMessageAsync("We try to pack the " + passGate.VBody.GetType().ToString().Substring(passGate.VBody.GetType().ToString().LastIndexOf('.') + 1), 
+            Mbox.ShowMessageAsync("We try to pack the " + passGate.VBody.GetType().Name, 
                 ask != "" ? ask : "Will come to look for another way :(");
+        }
+
+        public static void LoadSelectComboBox(Type abstractType, ComboBox comboBox)
+        {            
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            for (int i = 0; i < assemblies.Length; i++)
+            {
+                Type[] types = assemblies[i].GetTypes();
+                for (int j = 0; j < types.Length; j++)
+                {
+                    if (types[j].IsSubclassOf(abstractType))
+                    {
+                        comboBox.Items.Add(new MyType(types[j]));
+                    }
+                }
+                comboBox.SelectedIndex = 0;
+            }
+        }
+
+        public static void LoadPropertyForm(StackPanel stackPanel, ComboBox comboBox)
+        {
+            PropertyInfo[] myPropertyInfo;
+            Type myType = (comboBox.SelectedItem as MyType).ValueType;
+
+            myPropertyInfo = myType.GetProperties();
+
+            stackPanel.Children.Clear();
+
+            for (int i = 0; i < myPropertyInfo.Length; i++)
+                if (myPropertyInfo[i].CanWrite)
+                    stackPanel.Children.Add(new VariablesBlock(myPropertyInfo[i].Name));
         }
     }
 }

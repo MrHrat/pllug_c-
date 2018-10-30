@@ -84,6 +84,8 @@
     </ApplicationDefinition>
     <Compile Include="Class\Builder.cs" />
     <Compile Include="Class\FactoryCollection.cs" />
+    <Compile Include="Class\IReadParam.cs" />
+    <Compile Include="Class\MyType.cs" />
     <Compile Include="Class\PassGate\BulletThoughTheDoor.cs" />
     <Compile Include="Class\PassGate\TubThoughTheDoor.cs" />
     <Compile Include="Class\VolumetricBody\Bullet.cs" />
@@ -92,20 +94,8 @@
     <Compile Include="Class\PassGate\PassGate.cs" />
     <Compile Include="Class\VolumetricBody\Tub.cs" />
     <Compile Include="Class\VolumetricBody\Wardrobe.cs" />
-    <Compile Include="Views\ArchPanel.xaml.cs">
-      <DependentUpon>ArchPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BulletPanel.xaml.cs">
-      <DependentUpon>BulletPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DoorPanel.xaml.cs">
-      <DependentUpon>DoorPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\StandardPanel.xaml.cs">
-      <DependentUpon>StandardPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -113,23 +103,14 @@
     </Compile>
     <Compile Include="Class\VolumetricBody\VolumetricBody.cs" />
     <Compile Include="Class\PassGate\WardrobeThroughTheDoor.cs" />
-    <Page Include="Views\ArchPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BulletPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\DoorPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="Views\VariablesBlock.xaml.cs">
+      <DependentUpon>VariablesBlock.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StandardPanel.xaml">
+    <Page Include="Views\VariablesBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -159,7 +140,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

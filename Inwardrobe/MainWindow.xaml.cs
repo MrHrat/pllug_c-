@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Inwardrobe.Class;
+using Inwardrobe.Views;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -40,12 +42,12 @@ namespace Inwardrobe
         private void Run_Click(object sender, RoutedEventArgs e)
         {            
             try
-            {
-                builder.SetPassageway(Passageway);
-                builder.SetVolumetricBody(VolumetricBoby);
+            {                
+                builder.SetBodyOrGate(passageway, selectPassageway);
+                builder.SetBodyOrGate(volumetricBoby, selectVolumetricBody);
                 builder.GetResult(this);
             }
-            catch(FormatException ex)
+            catch (FormatException ex)
             {
                 this.ShowMessageAsync("Error!", "Invalid number format");
             }
@@ -53,6 +55,22 @@ namespace Inwardrobe
             {
                 this.ShowMessageAsync("Error!", ex.GetType().ToString());
             }
+        }
+
+        private void selectPassageway_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Builder.LoadPropertyForm(passageway, selectPassageway);
+        }
+
+        private void selectVolumetricBody_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Builder.LoadPropertyForm(volumetricBoby, selectVolumetricBody);
+        }
+
+        private void metroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Builder.LoadSelectComboBox(typeof(Passageway), selectPassageway);
+            Builder.LoadSelectComboBox(typeof(VolumetricBody), selectVolumetricBody);
         }
     }
 }
