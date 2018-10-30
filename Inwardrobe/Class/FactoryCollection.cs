@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Inwardrobe.Class
 {
@@ -10,13 +12,15 @@ namespace Inwardrobe.Class
     {
         public static PassGate GetPassGate(Passageway passageway, VolumetricBody body)
         {
-            switch (body.GetType().ToString())
+            switch (passageway.GetType().Name + body.GetType().Name)
             {
-                case "Wardrobe":
+                case "DoorWardrobe":
                     return new WardrobeThroughTheDoor(passageway as Door, body as Wardrobe);
-                case "Bullet":
+                case "ArchBullet":                    
+                    return new BulletThoughTheArch(passageway as Arch, body as Bullet);
+                case "DoorBullet":
                     return new BulletThoughTheDoor(passageway as Door, body as Bullet);
-                case "Tub":
+                case "DoorTub":
                     return new TubThoughTheDoor(passageway as Door, body as Tub);
                 default:
                     return new PassGate(passageway, body);

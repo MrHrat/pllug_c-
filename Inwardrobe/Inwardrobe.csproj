@@ -86,6 +86,8 @@
     <Compile Include="Class\FactoryCollection.cs" />
     <Compile Include="Class\IReadParam.cs" />
     <Compile Include="Class\MyType.cs" />
+    <Compile Include="Class\Passageway\Arch.cs" />
+    <Compile Include="Class\PassGate\BulletThoughTheArch.cs" />
     <Compile Include="Class\PassGate\BulletThoughTheDoor.cs" />
     <Compile Include="Class\PassGate\TubThoughTheDoor.cs" />
     <Compile Include="Class\VolumetricBody\Bullet.cs" />
@@ -167,7 +169,7 @@
   <Import Project="packages\VS2017MSBuildAutoVersioning.1.0.11\build\VS2017MSBuildAutoVersioning.targets" Condition="Exists('packages\VS2017MSBuildAutoVersioning.1.0.11\build\VS2017MSBuildAutoVersioning.targets')" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseUniversalClock="True" BuildVersion_UseGlobalSettings="False" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_StartDate="2018/10/27" BuildVersion_BuildVersioningStyle="None.None.YearDecadeStamp.Increment" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.YearDecadeStamp.Increment" BuildVersion_StartDate="2018/10/27" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_UseGlobalSettings="False" BuildVersion_UseUniversalClock="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
