@@ -33,15 +33,11 @@ namespace Inwardrobe.Class
             {
                 passageway = FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) as Passageway;
                 passageway.SetParamValue(keyValuePairs);
-
-                MessageBox.Show(passageway.Width.ToString() + " " + passageway.Height.ToString() + " " + passageway.GetType().Name);
             }
             else if (FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) is VolumetricBody)
             {
                 volumetricBody = FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) as VolumetricBody;
                 volumetricBody.SetParamValue(keyValuePairs);
-
-                MessageBox.Show(volumetricBody.Width.ToString() + " " + volumetricBody.Height.ToString() + " " + volumetricBody.GetType().Name);
             }
         }
 
