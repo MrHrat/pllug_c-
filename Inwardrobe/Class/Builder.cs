@@ -50,9 +50,10 @@ namespace Inwardrobe.Class
                 ask != "" ? ask : "Will come to look for another way :(");
         }
 
-        public static void LoadSelectComboBox(Type abstractType, ComboBox comboBox)
+        public static Type[] LoadSelectComboBox(Type abstractType)
         {            
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();            
+            List<Type> ls = new List<Type>();
 
             for (int i = 0; i < assemblies.Length; i++)
             {
@@ -61,11 +62,12 @@ namespace Inwardrobe.Class
                 {
                     if (types[j].IsSubclassOf(abstractType))
                     {
-                        comboBox.Items.Add(new MyType(types[j]));
+                        ls.Add(types[j]);
                     }
-                }
-                comboBox.SelectedIndex = 0;
+                }                
             }
+
+            return ls.ToArray();
         }
 
         public static void LoadPropertyForm(StackPanel stackPanel, ComboBox comboBox)
