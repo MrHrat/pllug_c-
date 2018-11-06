@@ -70,18 +70,16 @@ namespace Inwardrobe.Class
             return ls.ToArray();
         }
 
-        public static void LoadPropertyForm(StackPanel stackPanel, ComboBox comboBox)
+        public static string[] LoadPropertyForm(Type myType)
         {
-            PropertyInfo[] myPropertyInfo;
-            Type myType = (comboBox.SelectedItem as MyType).ValueType;
-
-            myPropertyInfo = myType.GetProperties();
-
-            stackPanel.Children.Clear();
+            PropertyInfo[] myPropertyInfo = myType.GetProperties();
+            List<string> ls = new List<string>();
 
             for (int i = 0; i < myPropertyInfo.Length; i++)
                 if (myPropertyInfo[i].CanWrite)
-                    stackPanel.Children.Add(new VariablesBlock(myPropertyInfo[i].Name));
+                    ls.Add(myPropertyInfo[i].Name);
+
+            return ls.ToArray();
         }
     }
 }
