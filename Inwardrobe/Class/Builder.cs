@@ -41,17 +41,16 @@ namespace Inwardrobe.Class
             }
         }
 
-        public void GetResult(MetroWindow Mbox)
+        public string GetResult()
         {
             passGate = FactoryCollection.GetPassGate(passageway, volumetricBody);
 
             string ask = passGate.MoveTheGate();
-            Mbox.ShowMessageAsync("We try to pack the " + passGate.VBody.GetType().Name, 
-                ask != "" ? ask : "Will come to look for another way :(");
+            return ask != "" ? ask : "Will come to look for another way :(";
         }
 
         public static Type[] LoadSelectComboBox(Type abstractType)
-        {            
+        {
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();            
             List<Type> ls = new List<Type>();
 
