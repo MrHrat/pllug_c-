@@ -82,10 +82,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Class\ApplicationViewModel.cs" />
     <Compile Include="Class\Builder.cs" />
+    <Compile Include="Class\ClassToTypeStringConverter.cs" />
+    <Compile Include="Class\ComboBoxPairs.cs" />
     <Compile Include="Class\FactoryCollection.cs" />
     <Compile Include="Class\IReadParam.cs" />
-    <Compile Include="Class\MyType.cs" />
     <Compile Include="Class\Passageway\Arch.cs" />
     <Compile Include="Class\PassGate\BulletThoughTheArch.cs" />
     <Compile Include="Class\PassGate\BulletThoughTheDoor.cs" />
@@ -105,14 +107,7 @@
     </Compile>
     <Compile Include="Class\VolumetricBody\VolumetricBody.cs" />
     <Compile Include="Class\PassGate\WardrobeThroughTheDoor.cs" />
-    <Compile Include="Views\VariablesBlock.xaml.cs">
-      <DependentUpon>VariablesBlock.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\VariablesBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

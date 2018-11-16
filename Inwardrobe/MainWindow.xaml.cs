@@ -15,7 +15,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Inwardrobe.Class;
-using Inwardrobe.Views;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -26,51 +25,54 @@ namespace Inwardrobe
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        Builder builder;
+        private ApplicationViewModel ViewModel;
 
         public string Version
         {
-            get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+            get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
         }
 
         public MainWindow()
         {
             InitializeComponent();
-            builder = new Builder();
+            ViewModel = new ApplicationViewModel();
+            DataContext = ViewModel;
         }
 
         private void Run_Click(object sender, RoutedEventArgs e)
-        {            
-            try
-            {                
-                builder.SetBodyOrGate(passageway, selectPassageway);
-                builder.SetBodyOrGate(volumetricBoby, selectVolumetricBody);
-                builder.GetResult(this);
-            }
-            catch (FormatException ex)
+        {
+            string ask = "";
+            foreach (ComboBoxPairs cbp in ViewModel.paramPassageways)
             {
-                this.ShowMessageAsync("Error!", "Invalid number format");
+                ask += cbp.Key + " " + cbp.Value + "\n";
             }
-            catch (Exception ex)
-            {
-                this.ShowMessageAsync("Error!", ex.GetType().ToString());
-            }
+            MessageBox.Show(ask);
+            
+            //MessageBox.Show(ViewModel.paramPassageways["Radius"].ToString());
+            Arch arch = new Arch(10.0, 10.0);
+            MessageBox.Show(arch.Height.ToString());
+            double rez = (double)Builder.GetPropertyValue(arch, "Height");
+            Builder.SetPropertyValue(arch, "Height", 101.0);
+            rez = 101.0;
+            MessageBox.Show(arch.Height.ToString());
         }
 
         private void selectPassageway_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Builder.LoadPropertyForm(passageway, selectPassageway);
+            //ViewModel.LoadProperty();
         }
 
         private void selectVolumetricBody_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Builder.LoadPropertyForm(volumetricBoby, selectVolumetricBody);
+            //Builder.LoadPropertyForm(volumetricBoby, selectVolumetricBody.SelectedItem as Type);
+            //MessageBox.Show(volumetricBoby.Children[0].ToString());
         }
 
         private void metroWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            Builder.LoadSelectComboBox(typeof(Passageway), selectPassageway);
-            Builder.LoadSelectComboBox(typeof(VolumetricBody), selectVolumetricBody);
+        {            
+            //selectPassageway.ItemsSource = Builder.LoadSelectComboBox(typeof(Passageway));
+            //selectVolumetricBody.ItemsSource = Builder.LoadSelectComboBox(typeof(VolumetricBody));
+            
         }
     }
 }
