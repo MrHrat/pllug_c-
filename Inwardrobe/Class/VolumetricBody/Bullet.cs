@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inwardrobe.Class
 {
-    public class Bullet : VolumetricBody, IReadParam
+    public class Bullet : VolumetricBody
     {
         private double _diameter
         {
@@ -26,11 +26,6 @@ namespace Inwardrobe.Class
         public Bullet(double radius)
         {
             Radius = radius;
-        }
-
-        public override void SetParamValue(Dictionary<string, double> keyValuePairs)
-        {            
-            Radius = keyValuePairs["Radius"];
         }
     }
 }

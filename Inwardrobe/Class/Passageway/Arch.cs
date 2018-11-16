@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inwardrobe.Class
 {
-    public class Arch : Passageway, IReadParam
+    public class Arch : Passageway
     {
         private double _diameter
         {
@@ -22,12 +22,6 @@ namespace Inwardrobe.Class
         {
             Radius = radius;
             Height = height;
-        }
-
-        public override void SetParamValue(Dictionary<string, double> keyValuePairs)
-        {
-            Height = keyValuePairs["Height"];
-            Radius = keyValuePairs["Radius"];
         }
     }
 }
