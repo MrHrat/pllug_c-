@@ -1,5 +1,4 @@
-﻿using Inwardrobe.Views;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Reflection;
@@ -10,46 +9,31 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Runtime.Serialization;
+using System.Collections.ObjectModel;
 
 namespace Inwardrobe.Class
 {
     public class Builder
     {
-        private Passageway passageway;
-        private VolumetricBody volumetricBody;
-        private PassGate passGate;
+        private Passageway _passageway;
+        private VolumetricBody _volumetricBody;        
 
         public Builder() { }
-
-        public void SetBodyOrGate(StackPanel stackPanel, ComboBox comboBox)
+        public Builder(Passageway passageway, VolumetricBody volumetricBody)
         {
-            Dictionary<string, double> keyValuePairs = new Dictionary<string, double>();
-            foreach (VariablesBlock variablesBlock in stackPanel.Children)
-            {
-                keyValuePairs.Add(variablesBlock.NameValue, variablesBlock.Value);
-            }
-
-            if (FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) is Passageway)
-            {
-                passageway = FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) as Passageway;
-                passageway.SetParamValue(keyValuePairs);
-            }
-            else if (FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) is VolumetricBody)
-            {
-                volumetricBody = FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) as VolumetricBody;
-                volumetricBody.SetParamValue(keyValuePairs);
-            }
+            _passageway = passageway;
+            _volumetricBody = volumetricBody;
         }
 
         public string GetResult()
         {
-            passGate = FactoryCollection.GetPassGate(passageway, volumetricBody);
+            PassGate passGate = FactoryCollection.GetPassGate(_passageway, _volumetricBody);
 
             string ask = passGate.MoveTheGate();
             return ask != "" ? ask : "Will come to look for another way :(";
         }
 
-        public static Type[] LoadSelectComboBox(Type abstractType)
+        public static Type[] LoadSelectList(Type abstractType)
         {
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();            
             List<Type> ls = new List<Type>();
@@ -69,16 +53,34 @@ namespace Inwardrobe.Class
             return ls.ToArray();
         }
 
-        public static string[] LoadPropertyForm(Type myType)
+        public static ObservableCollection<ComboBoxPairs> LoadPropertyForm(object obj)
         {
-            PropertyInfo[] myPropertyInfo = myType.GetProperties();
-            List<string> ls = new List<string>();
+            PropertyInfo[] myPropertyInfo = obj.GetType().GetProperties();
+            ObservableCollection<ComboBoxPairs> ls = new ObservableCollection<ComboBoxPairs>();
 
             for (int i = 0; i < myPropertyInfo.Length; i++)
                 if (myPropertyInfo[i].CanWrite)
-                    ls.Add(myPropertyInfo[i].Name);
+                {
+                    ls.Add(new ComboBoxPairs(myPropertyInfo[i].Name, obj));                    
+                }
 
-            return ls.ToArray();
+            return ls;
         }
+
+        public static object GetPropertyValue(object obj, string propertyName)
+        {
+            return obj.GetType().GetProperties()
+               .Single(pi => pi.Name == propertyName)
+               .GetValue(obj, null);
+        }
+
+        public static void SetPropertyValue(object obj, string propertyName, double value)
+        {
+            PropertyInfo prop = obj.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
+            if (null != prop && prop.CanWrite)
+            {
+                prop.SetValue(obj, value, null);
+            }
+        }        
     }
 }
