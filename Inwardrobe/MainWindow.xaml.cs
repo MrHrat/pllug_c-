@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,40 +40,16 @@ namespace Inwardrobe
             DataContext = ViewModel;
         }
 
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
         private void Run_Click(object sender, RoutedEventArgs e)
         {
-            string ask = "";
-            foreach (ComboBoxPairs cbp in ViewModel.paramPassageways)
-            {
-                ask += cbp.Key + " " + cbp.Value + "\n";
-            }
-            MessageBox.Show(ask);
-            
-            //MessageBox.Show(ViewModel.paramPassageways["Radius"].ToString());
-            Arch arch = new Arch(10.0, 10.0);
-            MessageBox.Show(arch.Height.ToString());
-            double rez = (double)Builder.GetPropertyValue(arch, "Height");
-            Builder.SetPropertyValue(arch, "Height", 101.0);
-            rez = 101.0;
-            MessageBox.Show(arch.Height.ToString());
-        }
-
-        private void selectPassageway_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //ViewModel.LoadProperty();
-        }
-
-        private void selectVolumetricBody_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //Builder.LoadPropertyForm(volumetricBoby, selectVolumetricBody.SelectedItem as Type);
-            //MessageBox.Show(volumetricBoby.Children[0].ToString());
-        }
-
-        private void metroWindow_Loaded(object sender, RoutedEventArgs e)
-        {            
-            //selectPassageway.ItemsSource = Builder.LoadSelectComboBox(typeof(Passageway));
-            //selectVolumetricBody.ItemsSource = Builder.LoadSelectComboBox(typeof(VolumetricBody));
-            
+            Builder builder = new Builder(ViewModel.SelectedPassageway, ViewModel.SelectedVolumetricBody);
+            this.ShowMessageAsync("We try to pack", builder.GetResult());
         }
     }
 }

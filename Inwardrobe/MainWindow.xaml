@@ -10,7 +10,7 @@
                         mc:Ignorable="d"             
                         Title="The entry of the cabinet"
                         SizeToContent = "WidthAndHeight"
-                        d:DesignHeight="300" d:DesignWidth="450" Loaded="metroWindow_Loaded">
+                        d:DesignHeight="300" d:DesignWidth="450">
 
     <Controls:MetroWindow.Resources>
         <class:ClassToTypeStringConverter x:Key="ClassToTypeStringConverter"/>
@@ -22,7 +22,7 @@
         <DataTemplate x:Key="Params">
             <StackPanel>
                 <TextBlock Text="{Binding Path=Key}" Margin= "2 5 2 2"/>
-                <TextBox Text="{Binding Path=Value}" TextAlignment="Right"/>                
+                <TextBox Text="{Binding Path=Value}" PreviewTextInput="NumberValidationTextBox" TextAlignment="Right"/>                
             </StackPanel>
         </DataTemplate>
     </Controls:MetroWindow.Resources>
