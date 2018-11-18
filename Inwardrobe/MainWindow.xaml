@@ -10,7 +10,7 @@
                         mc:Ignorable="d"             
                         Title="The entry of the cabinet"
                         SizeToContent = "WidthAndHeight"
-                        d:DesignHeight="300" d:DesignWidth="450">
+                        d:DesignHeight="300" d:DesignWidth="450" Loaded="metroWindow_Loaded" Closed="metroWindow_Closed">
 
     <Controls:MetroWindow.Resources>
         <class:ClassToTypeStringConverter x:Key="ClassToTypeStringConverter"/>
@@ -45,12 +45,12 @@
         <StackPanel Orientation="Horizontal">
             <ItemsControl Margin ="15">
                 <TextBlock Text="Select the type of gate:" Margin="10 0 10 10"/>
-                <ComboBox ItemsSource="{Binding passageways}" SelectedItem="{Binding SelectedPassageway}" ItemTemplate="{StaticResource ComboBoxTemplate}"  Margin="0 0 0 10"/>
+                <ComboBox ItemsSource="{Binding passageways}" SelectedItem="{Binding SelectedPassageway}" SelectedIndex="{Binding SelectedIndexPassageways}" ItemTemplate="{StaticResource ComboBoxTemplate}"  Margin="0 0 0 10"/>
                 <ItemsControl ItemsSource="{Binding paramPassageways, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource Params}"/>
             </ItemsControl>
             <ItemsControl Margin ="15">
                 <TextBlock Text="Select the type of body:" Margin="10 0 10 10"/>
-                <ComboBox ItemsSource="{Binding volumetricBodies}" SelectedItem="{Binding SelectedVolumetricBody}" ItemTemplate="{StaticResource ComboBoxTemplate}" Margin="0 0 0 10"/>
+                <ComboBox ItemsSource="{Binding volumetricBodies}" SelectedItem="{Binding SelectedVolumetricBody}" SelectedIndex="{Binding SelectedIndexVolumetricBody}" ItemTemplate="{StaticResource ComboBoxTemplate}" Margin="0 0 0 10"/>
                 <ItemsControl ItemsSource="{Binding paramVolumetricBody, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource Params}"/>
             </ItemsControl>
         </StackPanel>

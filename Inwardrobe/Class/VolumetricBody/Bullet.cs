@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inwardrobe.Class
 {
+    [Serializable]
     public class Bullet : VolumetricBody
     {
         private double _diameter
@@ -22,6 +23,10 @@ namespace Inwardrobe.Class
 
         public override double Depth => _diameter;
 
+        public Bullet()
+        {
+            Radius = 0.0;
+        }
 
         public Bullet(double radius)
         {

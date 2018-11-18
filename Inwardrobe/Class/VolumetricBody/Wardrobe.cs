@@ -6,9 +6,17 @@ using System.Threading.Tasks;
 
 namespace Inwardrobe.Class
 {
+    [Serializable]
     public class Wardrobe : VolumetricBody
     {
-        public Wardrobe(double width, double height, double depth)
+        public Wardrobe()
+        {
+            Width = 0.0;
+            Height = 0.0;
+            Depth = 0.0;
+        }
+
+        public Wardrobe(double width = 0.0, double height = 0.0, double depth = 0.0)
         {
             Width = width;
             Height = height;

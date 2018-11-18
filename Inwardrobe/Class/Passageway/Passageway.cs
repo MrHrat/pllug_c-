@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inwardrobe.Class
 {
+    [Serializable]
     public abstract class Passageway
     {
         public virtual double Width { get; set; }

@@ -36,7 +36,7 @@ namespace Inwardrobe
         public MainWindow()
         {
             InitializeComponent();
-            ViewModel = new ApplicationViewModel();
+            ViewModel = new ApplicationViewModel();            
             DataContext = ViewModel;
         }
 
@@ -47,9 +47,20 @@ namespace Inwardrobe
         }
 
         private void Run_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             Builder builder = new Builder(ViewModel.SelectedPassageway, ViewModel.SelectedVolumetricBody);
             this.ShowMessageAsync("We try to pack", builder.GetResult());
+        }
+
+        private void metroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.LoadWork();
+            ViewModel.Init();
+        }
+
+        private void metroWindow_Closed(object sender, EventArgs e)
+        {
+            ViewModel.SaveWork();
         }
     }
 }

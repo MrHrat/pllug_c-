@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inwardrobe.Class
 {
+    [Serializable]
     public class Tub : VolumetricBody
     {
         private double _radius;
@@ -18,6 +19,12 @@ namespace Inwardrobe.Class
         {
             get => _radius * 2.0;
             set => _radius = value / 2.0;
+        }
+
+        public Tub()
+        {
+            _radius = 0.0;
+            Height = 0.0;
         }
 
         public Tub(double radius, double height)
