@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace Inwardrobe.Class
 {
-    public class Door : Passageway, IReadParam
+    [Serializable]
+    public class Door : Passageway
     {
+        public Door()
+        {
+            Width = 0.0;
+            Height = 0.0;
+        }
+
         public Door(double widht, double height)
         {
             Width = widht;

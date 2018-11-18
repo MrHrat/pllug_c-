@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Inwardrobe.Class
 {
     [Serializable]
-    public class Bullet : VolumetricBody
+    public class Arch : Passageway
     {
+        [XmlIgnore]
         private double _diameter
         {
             get => Radius * 2.0;
@@ -17,20 +19,19 @@ namespace Inwardrobe.Class
 
         public double Radius { get; set; }
 
+        [XmlIgnore]
         public override double Width => _diameter;
 
-        public override double Height => _diameter;
-
-        public override double Depth => _diameter;
-
-        public Bullet()
+        public Arch()
         {
             Radius = 0.0;
+            Height = 0.0;
         }
 
-        public Bullet(double radius)
+        public Arch(double radius, double height)
         {
             Radius = radius;
+            Height = height;
         }
     }
 }

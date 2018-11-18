@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Inwardrobe.Class
 {
-    public class Tub : VolumetricBody, IReadParam
+    [Serializable]
+    public class Tub : VolumetricBody
     {
         private double _radius;
 
@@ -20,16 +21,16 @@ namespace Inwardrobe.Class
             set => _radius = value / 2.0;
         }
 
+        public Tub()
+        {
+            _radius = 0.0;
+            Height = 0.0;
+        }
+
         public Tub(double radius, double height)
         {
             _radius = radius;
             Height = height;
-        }
-
-        public override void SetParamValue(Dictionary<string, double> keyValuePairs)
-        {
-            Height = keyValuePairs["Height"];
-            Diameter = keyValuePairs["Diameter"];
         }
     }
 }

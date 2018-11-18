@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,7 +16,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Inwardrobe.Class;
-using Inwardrobe.Views;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -26,51 +26,41 @@ namespace Inwardrobe
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        Builder builder;
+        private ApplicationViewModel ViewModel;
 
         public string Version
         {
-            get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+            get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
         }
 
         public MainWindow()
         {
             InitializeComponent();
-            builder = new Builder();
+            ViewModel = new ApplicationViewModel();            
+            DataContext = ViewModel;
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void Run_Click(object sender, RoutedEventArgs e)
         {            
-            try
-            {                
-                builder.SetBodyOrGate(passageway, selectPassageway);
-                builder.SetBodyOrGate(volumetricBoby, selectVolumetricBody);
-                builder.GetResult(this);
-            }
-            catch (FormatException ex)
-            {
-                this.ShowMessageAsync("Error!", "Invalid number format");
-            }
-            catch (Exception ex)
-            {
-                this.ShowMessageAsync("Error!", ex.GetType().ToString());
-            }
-        }
-
-        private void selectPassageway_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Builder.LoadPropertyForm(passageway, selectPassageway);
-        }
-
-        private void selectVolumetricBody_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Builder.LoadPropertyForm(volumetricBoby, selectVolumetricBody);
+            Builder builder = new Builder(ViewModel.SelectedPassageway, ViewModel.SelectedVolumetricBody);
+            this.ShowMessageAsync("We try to pack", builder.GetResult());
         }
 
         private void metroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            Builder.LoadSelectComboBox(typeof(Passageway), selectPassageway);
-            Builder.LoadSelectComboBox(typeof(VolumetricBody), selectVolumetricBody);
+            ViewModel.LoadWork();
+            ViewModel.Init();
+        }
+
+        private void metroWindow_Closed(object sender, EventArgs e)
+        {
+            ViewModel.SaveWork();
         }
     }
 }

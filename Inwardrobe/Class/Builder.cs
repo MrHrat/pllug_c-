@@ -1,5 +1,4 @@
-﻿using Inwardrobe.Views;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Reflection;
@@ -10,49 +9,34 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Runtime.Serialization;
+using System.Collections.ObjectModel;
 
 namespace Inwardrobe.Class
 {
     public class Builder
     {
-        private Passageway passageway;
-        private VolumetricBody volumetricBody;
-        private PassGate passGate;
+        private Passageway _passageway;
+        private VolumetricBody _volumetricBody;        
 
         public Builder() { }
-
-        public void SetBodyOrGate(StackPanel stackPanel, ComboBox comboBox)
+        public Builder(Passageway passageway, VolumetricBody volumetricBody)
         {
-            Dictionary<string, double> keyValuePairs = new Dictionary<string, double>();
-            foreach (VariablesBlock variablesBlock in stackPanel.Children)
-            {
-                keyValuePairs.Add(variablesBlock.NameValue, variablesBlock.Value);
-            }
-
-            if (FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) is Passageway)
-            {
-                passageway = FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) as Passageway;
-                passageway.SetParamValue(keyValuePairs);
-            }
-            else if (FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) is VolumetricBody)
-            {
-                volumetricBody = FormatterServices.GetUninitializedObject((comboBox.SelectedItem as MyType).ValueType) as VolumetricBody;
-                volumetricBody.SetParamValue(keyValuePairs);
-            }
+            _passageway = passageway;
+            _volumetricBody = volumetricBody;
         }
 
-        public void GetResult(MetroWindow Mbox)
+        public string GetResult()
         {
-            passGate = FactoryCollection.GetPassGate(passageway, volumetricBody);
+            PassGate passGate = FactoryCollection.GetPassGate(_passageway, _volumetricBody);
 
             string ask = passGate.MoveTheGate();
-            Mbox.ShowMessageAsync("We try to pack the " + passGate.VBody.GetType().Name, 
-                ask != "" ? ask : "Will come to look for another way :(");
+            return ask != "" ? ask : "Will come to look for another way :(";
         }
 
-        public static void LoadSelectComboBox(Type abstractType, ComboBox comboBox)
-        {            
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+        public static Type[] LoadSelectList(Type abstractType)
+        {
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();            
+            List<Type> ls = new List<Type>();
 
             for (int i = 0; i < assemblies.Length; i++)
             {
@@ -61,25 +45,42 @@ namespace Inwardrobe.Class
                 {
                     if (types[j].IsSubclassOf(abstractType))
                     {
-                        comboBox.Items.Add(new MyType(types[j]));
+                        ls.Add(types[j]);
                     }
-                }
-                comboBox.SelectedIndex = 0;
+                }                
             }
+
+            return ls.ToArray();
         }
 
-        public static void LoadPropertyForm(StackPanel stackPanel, ComboBox comboBox)
+        public static ObservableCollection<ComboBoxPairs> LoadPropertyForm(object obj)
         {
-            PropertyInfo[] myPropertyInfo;
-            Type myType = (comboBox.SelectedItem as MyType).ValueType;
-
-            myPropertyInfo = myType.GetProperties();
-
-            stackPanel.Children.Clear();
+            PropertyInfo[] myPropertyInfo = obj.GetType().GetProperties();
+            ObservableCollection<ComboBoxPairs> ls = new ObservableCollection<ComboBoxPairs>();
 
             for (int i = 0; i < myPropertyInfo.Length; i++)
                 if (myPropertyInfo[i].CanWrite)
-                    stackPanel.Children.Add(new VariablesBlock(myPropertyInfo[i].Name));
+                {
+                    ls.Add(new ComboBoxPairs(myPropertyInfo[i].Name, obj));                    
+                }
+
+            return ls;
         }
+
+        public static object GetPropertyValue(object obj, string propertyName)
+        {
+            return obj.GetType().GetProperties()
+               .Single(pi => pi.Name == propertyName)
+               .GetValue(obj, null);
+        }
+
+        public static void SetPropertyValue(object obj, string propertyName, double value)
+        {
+            PropertyInfo prop = obj.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
+            if (null != prop && prop.CanWrite)
+            {
+                prop.SetValue(obj, value, null);
+            }
+        }        
     }
 }
